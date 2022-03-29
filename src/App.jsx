@@ -2,56 +2,41 @@ import {useState} from 'react'
 
 function App() {
 
-const [pruebaState, setPruebaState] = useState("");
-const [tituloState, setTituloState] = useState("");
-const [fechaState, setFechaState] = useState("");
-const [notaState, setNotaState] = useState("");
+const [InputState, setInputState] = useState({
+  titulo: "",
+  fecha: "",
+  nota: "",
+});
+
 
   //let varprueba = "Titulo";
 
-const handleChangePrueba = (event) => {
-  setPruebaState(event.target.value);
+
+
+const handleInputChange = (event) => {
+  setInputState({
+    //titulo: event.target.value,
+    //fecha: "",
+    //nota: ""
+    ...InputState,
+    [event.target.name]: event.target.value,
+  });
   
   //console.log(event.target.name, event.target.value);
 };
 
-const handleChangeTitulo = (event) => {
-  setTituloState(event.target.value);
-  
-  //console.log(event.target.name, event.target.value);
-};
 
-const handleChangeFecha = (event) => {
-  setFechaState(event.target.value);
-  
-  //console.log(event.target.name, event.target.value);
-};
-
-const handleChangeNota = (event) => {
-  setNotaState(event.target.value);
-  
-  //console.log(event.target.name, event.target.value);
-};
   return (
     <div className="App">
       <h1>Hello</h1>
 
-      <label htmlFor="pruebaID">Input de prueba</label>
-      <input 
-      id="pruebaID" 
-      name="prueba" 
-      type="text" 
-      onChange={handleChangePrueba} 
-      value = {pruebaState} />
-<br />
-<br />
       <label htmlFor="titulo">Titulo</label>
       <input 
       id="titulo" 
       name="titulo" 
       type="text" 
-      onChange={handleChangeTitulo} 
-      value = {tituloState} />
+      onChange={handleInputChange} 
+      value = {InputState.titulo} />
 <br />
 <br />
       <label htmlFor="fecha">Fecha</label>
@@ -59,8 +44,8 @@ const handleChangeNota = (event) => {
       id="fecha" 
       name="fecha" 
       type="text" 
-      onChange={handleChangeFecha} 
-      value = {fechaState} />
+      onChange={handleInputChange} 
+      value = {InputState.fecha} />
 <br />
 <br />
       <label htmlFor="nota">Nota</label>
@@ -68,8 +53,8 @@ const handleChangeNota = (event) => {
       id="nota" 
       name="nota" 
       type="text" 
-      onChange={handleChangeNota} 
-      value = {notaState} />
+      onChange={handleInputChange} 
+      value = {InputState.nota} />
       
     </div>
     
