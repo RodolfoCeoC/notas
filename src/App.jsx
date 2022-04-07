@@ -1,29 +1,34 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
 function App() {
 
-const [InputState, setInputState] = useState({
-  titulo: "",
-  fecha: "",
-  nota: "",
-});
-
-
-  //let varprueba = "Titulo";
-
-
-
-const handleInputChange = (event) => {
-  setInputState({
-    //titulo: event.target.value,
-    //fecha: "",
-    //nota: ""
-    ...InputState,
-    [event.target.name]: event.target.value,
+  const [InputState, setInputState] = useState({
+    titulo: "",
+    fecha: "",
+    nota: "",
   });
-  
-  //console.log(event.target.name, event.target.value);
-};
+
+
+  const handleClear = () => {
+    setInputState({
+      titulo: "",
+      fecha: "",
+      nota: "",
+    })
+
+  }
+
+  const handleInputChange = (event) => {
+    setInputState({
+      //titulo: event.target.value,
+      //fecha: "",
+      //nota: ""
+      ...InputState,
+      [event.target.name]: event.target.value,
+    });
+
+    //console.log(event.target.name, event.target.value);
+  };
 
 
   return (
@@ -31,34 +36,53 @@ const handleInputChange = (event) => {
       <h1>Hello</h1>
 
       <label htmlFor="titulo">Titulo</label>
-      <input 
-      id="titulo" 
-      name="titulo" 
-      type="text" 
-      onChange={handleInputChange} 
-      value = {InputState.titulo} />
-<br />
-<br />
+
+      <input
+        id="titulo"
+        name="titulo"
+        type="text"
+        onChange={handleInputChange}
+        value={InputState.titulo}
+      />
+      <br />
+      <br />
       <label htmlFor="fecha">Fecha</label>
-      <input 
-      id="fecha" 
-      name="fecha" 
-      type="text" 
-      onChange={handleInputChange} 
-      value = {InputState.fecha} />
-<br />
-<br />
+
+      <input
+        id="fecha"
+        name="fecha"
+        type="text"
+        onChange={handleInputChange}
+        value={InputState.fecha} />
+      <br />
+      <br />
       <label htmlFor="nota">Nota</label>
-      <input 
-      id="nota" 
-      name="nota" 
-      type="text" 
-      onChange={handleInputChange} 
-      value = {InputState.nota} />
-      
+
+      <input
+        id="nota"
+        name="nota"
+        type="text"
+        onChange={handleInputChange}
+        value={InputState.nota} />
+
+
+      <div style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        marginRight: "5px",
+        justifyContent: "center",
+        alignItems: "",
+      }}>
+
+        <button type="button" class="btn btn-primary" onClick={handleClear}>Limpiar</button>
+      </div>
+
     </div>
-    
+
+
+
   );
+
 }
 export default App;
-  
+
