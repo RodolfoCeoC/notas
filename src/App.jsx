@@ -8,6 +8,9 @@ function App() {
     nota: "",
   });
 
+  const initialState = JSON.parse(localStorage.getItem("notas")) || [];
+  const[notas, setnotas] = useState(initialState)
+
   const handleClear = () => {
     setInputState({
       titulo: "",
@@ -17,16 +20,9 @@ function App() {
 
   }
 
-  const handleReset = () => {
-    localStorage.clear();
-    
-  }
-
-  let arregloNotas = JSON.parse(localStorage.getItem("notas")) || [];
-
   const handleClickGuardar = () => {
-    arregloNotas.push(InputState);
-    localStorage.setItem("notas", JSON.stringify(arregloNotas));
+    setnotas([...notas, InputState])
+    localStorage.setItem("notas", JSON.stringify(notas));
     handleClear();
   };
 
@@ -42,6 +38,18 @@ function App() {
     //console.log(event.target.name, event.target.value);
   };
 
+  const handleBorrarNota = (index) => {
+    const nuevoArreglo = [];
+
+    notas.forEach((nota, i) => {
+      if ( index !== i){
+        nuevoArreglo.push(nota)
+      }
+    });
+
+    localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
+    setnotas([...nuevoArreglo]);
+  };
 
   return (
     <div className="App container">
@@ -49,23 +57,32 @@ function App() {
         <div className="row">
           <div className="col p-4">
             <div className='text-center'>
-            <h3 className='text-center'>Lista</h3>
-            {arregloNotas.length === 0 ?
-              "No existen notas guardadas"
-              :
-              (
-                <ol>
-                  {arregloNotas.map((item) => {
-                    return (
-                      <li>
-                        {item.titulo} ({item.fecha}) ({item.nota})
-                      </li>
-                    )
-                  })}
-                </ol>
-              )
-            }
-           </div>
+              <h3 className='text-center'>Lista</h3>
+              {notas.length === 0 ?
+                "No existen notas guardadas"
+                :
+                (
+                  <ol>
+                    {notas.map((item, index) => {
+                      return (
+                        <li key={index}>
+                          {item.titulo} ({item.fecha})&nbsp;
+                          <i>
+                            <i className="bi bi-x-circle-fill"
+                              onClick={() => handleBorrarNota(index)}
+                              style={{
+                                color: "purple",
+                                fontSize: "1rem",
+                                cursor: "pointer"
+                              }}></i>
+                          </i>
+                        </li>
+                      )
+                    })}
+                  </ol>
+                )
+              }
+            </div>
           </div>
           <div className="col text-center mx-auto p-4">
             <h1>Notas</h1>
@@ -87,7 +104,7 @@ function App() {
               <input
                 id="fecha"
                 name="fecha"
-                type="text"
+                type="date"
                 onChange={handleInputChange}
                 value={InputState.fecha} />
             </label>
@@ -96,7 +113,7 @@ function App() {
             <br />
 
             <label className="mb-2">Nota
-              <input
+              <textarea
                 id="nota"
                 name="nota"
                 type="text"
@@ -112,15 +129,15 @@ function App() {
               alignItems: "center",
             }}>
 
-              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              <div className="btn-group" role="group" aria-label="Basic mixed styles example">
 
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={handleClear}>
                   Limpiar
                 </button>
-                
+
                 <button
                   type="button"
                   className="btn btn-primary mx-2"
@@ -128,34 +145,13 @@ function App() {
                   style={{ marginLeft: "25px" }}>
                   Guardar
                 </button>
-
-                <button
-                  type="button"
-                  className="btn btn-primary mx-2"
-                  onClick={handleReset}
-                  style={{ marginLeft: "25px" }}>
-                  Reset Lista
-                </button>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
-
       </div>
-
-
     </div>
-
-
-
-
   );
-
 }
 export default App;
 
