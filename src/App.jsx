@@ -9,7 +9,7 @@ function App() {
   });
 
   const initialState = JSON.parse(localStorage.getItem("notas")) || [];
-  const[notas, setnotas] = useState(initialState)
+  const [notas, setnotas] = useState(initialState)
 
   const handleClear = () => {
     setInputState({
@@ -42,7 +42,7 @@ function App() {
     const nuevoArreglo = [];
 
     notas.forEach((nota, i) => {
-      if ( index !== i){
+      if (index !== i) {
         nuevoArreglo.push(nota)
       }
     });
@@ -51,8 +51,24 @@ function App() {
     setnotas([...nuevoArreglo]);
   };
 
+  const handleVaciar = () => {
+    const nuevoArreglo2 = [];
+    localStorage.setItem("notas", JSON.stringify(nuevoArreglo2));
+    setnotas([...nuevoArreglo2]);
+    localStorage.clear([nuevoArreglo2])
+  }
+
   return (
-    <div className="App container">
+    <div className="App container"
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        marginRight: "5px",
+        justifyContent: "left",
+        alignItems: "center",
+        textAlign: "center"
+      }}
+    >
       <div className="row">
         <div className="row">
           <div className="col p-4">
@@ -82,6 +98,12 @@ function App() {
                   </ol>
                 )
               }
+              <br />
+
+              <button type="button" className='btn btn-warning' onClick={handleVaciar}
+              >Vaciar
+              </button>
+
             </div>
           </div>
           <div className="col text-center mx-auto p-4">
@@ -100,11 +122,15 @@ function App() {
 
             <br />
             <br />
-            <label className="mb-2">Fecha
+            <label className="mb-2" style={{ width: "100%" }}>Fecha
               <input
                 id="fecha"
                 name="fecha"
                 type="date"
+                style={{
+                  width: "100%",
+                  textAlign: "center"
+                }}
                 onChange={handleInputChange}
                 value={InputState.fecha} />
             </label>
@@ -121,37 +147,29 @@ function App() {
                 value={InputState.nota} />
             </label>
 
-            <div style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginRight: "5px",
-              justifyContent: "center",
-              alignItems: "center",
-            }}>
+            <br />
+            <div className="btn-group" role="group" aria-label="Basic mixed styles example">
 
-              <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleClear}>
+                Limpiar
+              </button>
 
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleClear}>
-                  Limpiar
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-primary mx-2"
-                  onClick={handleClickGuardar}
-                  style={{ marginLeft: "25px" }}>
-                  Guardar
-                </button>
-              </div>
+              <button
+                type="button"
+                className="btn btn-primary mx-2"
+                onClick={handleClickGuardar}
+                style={{ marginLeft: "25px" }}>
+                Guardar
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 }
 export default App;
-
