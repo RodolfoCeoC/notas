@@ -56,7 +56,13 @@ function App() {
     localStorage.setItem("notas", JSON.stringify(nuevoArreglo2));
     setnotas([...nuevoArreglo2]);
     localStorage.clear([nuevoArreglo2])
-  }
+
+    /*  */
+  };
+  
+  const handleClickNota = (index) => {
+    setInputState({...notas[index]})
+  };
 
   return (
     <div className="App container"
@@ -81,7 +87,7 @@ function App() {
                   <ol>
                     {notas.map((item, index) => {
                       return (
-                        <li key={index}>
+                        <li key={index} onClick={()=>handleClickNota(index)}>
                           {item.titulo} ({item.fecha})&nbsp;
                           <i>
                             <i className="bi bi-x-circle-fill"
@@ -101,6 +107,7 @@ function App() {
               <br />
 
               <button type="button" className='btn btn-warning' onClick={handleVaciar}
+              disabled={notas.length==0}
               >Vaciar
               </button>
 
@@ -161,7 +168,12 @@ function App() {
                 type="button"
                 className="btn btn-primary mx-2"
                 onClick={handleClickGuardar}
-                style={{ marginLeft: "25px" }}>
+                style={{ marginLeft: "25px" }}
+                disabled={InputState.titulo==="" ||
+                            InputState.fecha==="" ||
+                            InputState.nota===""
+              }
+                >
                 Guardar
               </button>
             </div>
